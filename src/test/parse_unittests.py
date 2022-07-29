@@ -3,7 +3,7 @@ from typing import List
 import unittest
 from dataclasses import dataclass
 
-from src.json_config_parser import JSONConfigParser
+from src.cfgparser.json_config_parser import JSONConfigParser
 
 
 
