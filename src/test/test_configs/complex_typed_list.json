@@ -1,0 +1,29 @@
+{
+    "type_name": "src.test.parse_unittests.DummyConfig",
+    "config_name": "TestNameDummyConfig",
+    "dummy_element": {
+        "name": "TestName DummyConfigElement",
+        "list": [
+            2,
+            4
+        ],
+        "another_list": []
+    },
+    "dummy_element_list": [
+        {
+            "name": "ListEntry 1",
+            "list": [],
+            "another_list": []
+        },
+        {
+            "name": "ListEntry 2",
+            "list": [
+                5,
+                6,
+                7,
+                8
+            ],
+            "another_list": []
+        }
+    ]
+}
