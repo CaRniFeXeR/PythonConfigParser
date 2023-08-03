@@ -1,7 +1,10 @@
 # PythonConfigParser
 
-Typed Python JSON configparser based on Python dataclasses.
 
+easy, light-weight fully-typed python configs.
+not more, not less.
+    
+[![PyPI version](https://badge.fury.io/py/cfgparser.svg)](https://badge.fury.io/py/cfgparser)
 ![Badge Name](https://github.com/CaRniFeXeR/PythonConfigParser/actions/workflows/unittests.yml/badge.svg?branch=main&event=push)
 [![codecov](https://codecov.io/gh/CaRniFeXeR/PythonConfigParser/main/graph/badge.svg)](https://codecov.io/gh/CaRniFeXeR/PythonConfigParser)
 
