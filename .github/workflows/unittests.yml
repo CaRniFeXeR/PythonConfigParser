@@ -25,5 +25,5 @@ jobs:
 
     - name: Run unit tests
       run: |
-        python -m unittest discover test  # Assuming your tests are in a "tests" directory
+        python -m unittest discover src/test  # Assuming your tests are in a "tests" directory
 
