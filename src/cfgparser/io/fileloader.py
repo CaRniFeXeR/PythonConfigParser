@@ -6,8 +6,11 @@ class FileLoader(ABC):
 
     def __init__(self, inputfile: Path):
 
-        if inputfile == "":
+        if inputfile == "" or inputfile is None:
             raise ValueError("inputfile is empty")
+
+        if isinstance(inputfile, str):
+            inputfile = Path(inputfile)
 
         self.checkFileExists(inputfile)
 
@@ -16,6 +19,6 @@ class FileLoader(ABC):
     def checkFileExists(self, inputfile: Path):
 
         if not inputfile.exists():
-            message = f"{inputfile} does not exist"
+            message = f"'{inputfile}' does not exist"
             print(message)
             raise Exception(message)

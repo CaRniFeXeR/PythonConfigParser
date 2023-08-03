@@ -22,9 +22,8 @@ class JSONConfigParser:
 
         if isinstance(config_path, str):
             config_path = Path(config_path)
-
-        if not isinstance(config_path, Path):
-            raise TypeError("'config_path' must be a Path")
+        elif not isinstance(config_path, Path):
+            raise TypeError("'config_path' must be a str or Path")
 
         if not config_path.exists():
             raise ValueError(f"given config_path '{config_path}' does not exist")
