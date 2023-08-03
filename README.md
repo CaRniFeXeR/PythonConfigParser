@@ -26,7 +26,7 @@ First initialize the config parser with the path to the module with the config d
 
 parser = JSONConfigParser(datastructure_module_name="mysrc.datastructures.configs")
 # Then parse the config from file.
-my_config = parser.parse_config_from_file("myconfig.json")
+my_config = parser.parse_from_file("myconfig.json")
 
 ```
 
@@ -35,7 +35,7 @@ my_config = parser.parse_config_from_file("myconfig.json")
 ```python
 
 my_config_dict = {"type_name" : "mysrc.datastructures.configs.a"}
-my_config = JSONConfigParser().parse_config(my_config_dict)
+my_config = JSONConfigParser().parse(my_config_dict)
 
 ```
 
@@ -51,7 +51,7 @@ There are two ways to define the configs type:
 ```python
 from mysrc.datastructures.configs import a
 my_config_dict = {"some_key" : "some_value"}
-my_config = JSONConfigParser().parse_config_into_typed_object(my_config_dict,a)
+my_config = JSONConfigParser().parse_typed(my_config_dict,a)
 
 ```
 

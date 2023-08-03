@@ -15,7 +15,7 @@ class JSONConfigParser:
     def __init__(self, datastructure_module_name: str = "src.datastructures") -> None:
         self.datastructure_module_name = datastructure_module_name
 
-    def parse_config_from_file(self, config_path: Path):
+    def parse_from_file(self, config_path: Path):
         """
         loads a json config from the specified location and parses it into a typed object based on the type specified in 'type_name'
         """
@@ -32,9 +32,9 @@ class JSONConfigParser:
         fileloader = JsonFileLoader(config_path)
         config_dict = fileloader.loadJsonFile()
 
-        return self.parse_config(config_dict)
+        return self.parse(config_dict)
 
-    def parse_config(self, config_dict: dict):
+    def parse(self, config_dict: dict):
         """
         parse a config dict into a typed object based in on the type specified in 'type_name'
         """
@@ -48,9 +48,9 @@ class JSONConfigParser:
         current_type = load_type_dynamically_from_fqn(config_dict["type_name"])
         del config_dict["type_name"]  # should not be parsed
 
-        return self.parse_config_into_typed_object(config_dict, current_type)
+        return self.parse_typed(config_dict, current_type)
 
-    def parse_config_into_typed_object(self, config_dict: dict, current_type: Type):
+    def parse_typed(self, config_dict: dict, current_type: Type):
         """
         recursively converts a dict into the given dataclass type
         """
@@ -78,7 +78,7 @@ class JSONConfigParser:
                     raise ValueError(f"value '{v}' is not valid for enum of type '{field.type}' ") from ex
 
             elif field.type.__module__.startswith(self.datastructure_module_name):  # complex type from the specificed module
-                result_dict[k] = self.parse_config_into_typed_object(v, field.type)
+                result_dict[k] = self.parse_typed(v, field.type)
             elif hasattr(field.type, "_name") and field.type._name == "List":
 
                 if not isinstance(v, list):
@@ -88,7 +88,7 @@ class JSONConfigParser:
 
                 parsed_list = []
                 for el in v:
-                    parsed_list.append(self.parse_config_into_typed_object(el, list_element_type))
+                    parsed_list.append(self.parse_typed(el, list_element_type))
 
                 result_dict[k] = parsed_list
                 
