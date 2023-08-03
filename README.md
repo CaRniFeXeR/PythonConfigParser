@@ -77,8 +77,8 @@ pip install cfgparser
 
 - yaml support
 - typed optional support
+- typed union support
 - specify config from cli
 - cd pipeline 
-- test coverage banner
 - post hock
 - distributed configs
