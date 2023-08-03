@@ -9,7 +9,7 @@ from src.cfgparser.json_config_parser import JSONConfigParser
 
 class ConfigParserTest(unittest.TestCase):
 
-    def test_config_parser_complex_typed_list(self):
+    def test__config_parser__complex_typed_list_given__types_correctly_parsed(self):
 
         parser = JSONConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
@@ -20,7 +20,7 @@ class ConfigParserTest(unittest.TestCase):
         for el in parsed_dummy_config.dummy_element_list:
             self.assertTrue(type(el).__name__ == "DummyConfigElement")
 
-    def test_config_parser_missing_field(self):
+    def test__config_parser__missing_field__throws_correct_exception(self):
 
         parser = JSONConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
@@ -32,7 +32,7 @@ class ConfigParserTest(unittest.TestCase):
         self.assertTrue("required positional argument" in exception_msg)
         self.assertTrue("another_list" in exception_msg)
 
-    def test_config_parser_unkown_field(self):
+    def test__config_parser__unkown_field__throws_correct_exception(self):
 
         parser = JSONConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
@@ -42,7 +42,7 @@ class ConfigParserTest(unittest.TestCase):
         exception_msg = str(context.exception)
         self.assertTrue("unkown field name 'field_that_does_not_exist' for type" in exception_msg)
 
-    def test_config_parser_missing_type_name(self):
+    def test__config_parser__missing_type_name__throws_correct_exception(self):
 
         parser = JSONConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
@@ -52,7 +52,7 @@ class ConfigParserTest(unittest.TestCase):
         exception_msg = str(context.exception)
         self.assertTrue("'type_name' must be specified" in exception_msg)
 
-    def test_config_parser_wrong_simple_Type(self):
+    def test__config_parser__wrong_simple_type__throws_exception(self):
 
         parser = JSONConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
