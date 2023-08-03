@@ -60,6 +60,15 @@ class ConfigParserTest(unittest.TestCase):
 
         self.assertTrue(type(parsed_dummy_config.name).__name__ == "str")
 
+    def test__parse_from_file__with_path_and_with_str__should_be_equal(self):
+        
+        parser = JSONConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
+
+        parsed_dummy_config_path = parser.parse_config_from_file(Path(".\\src\\test\\test_configs\\complex_typed_list.json"))
+        parsed_dummy_config_str = parser.parse_config_from_file(".\\src\\test\\test_configs\\complex_typed_list.json")
+
+        self.assertEqual(parsed_dummy_config_path, parsed_dummy_config_str)
+
 
 if __name__ == '__main__':
     unittest.main()

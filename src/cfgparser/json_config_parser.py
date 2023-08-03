@@ -20,6 +20,9 @@ class JSONConfigParser:
         loads a json config from the specified location and parses it into a typed object based on the type specified in 'type_name'
         """
 
+        if isinstance(config_path, str):
+            config_path = Path(config_path)
+
         if not isinstance(config_path, Path):
             raise TypeError("'config_path' must be a Path")
 
