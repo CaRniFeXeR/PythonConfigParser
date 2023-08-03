@@ -2,6 +2,10 @@
 
 Typed Python JSON configparser based on Python dataclasses.
 
+![Badge Name](https://github.com/CaRniFeXeR/PythonConfigParser/actions/workflows/unittests.yml/badge.svg?branch=main&event=push)
+[![codecov](https://codecov.io/gh/CaRniFeXeR/PythonConfigParser/main/graph/badge.svg)](https://codecov.io/gh/CaRniFeXeR/PythonConfigParser)
+
+
 ## Usage
 
 define your config stucture in a dataclass like
@@ -76,3 +80,5 @@ pip install cfgparser
 - specify config from cli
 - cd pipeline 
 - test coverage banner
+- post hock
+- distributed configs

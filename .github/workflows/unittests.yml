@@ -1,4 +1,4 @@
-name: Automated Unit Tests
+name: Unit Tests
 
 on:
   push:
@@ -23,7 +23,19 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt  # If you have dependencies listed in a requirements.txt file
 
-    - name: Run unit tests
+    - name: Run unit tests and coverage
       run: |
-        python -m unittest discover src/test -p *test*.py  # Assuming your tests are in a "tests" directory and are called *test*.py
+        coverage run -m unittest discover src/test -p *test*.py  # Assuming your tests are in a "tests" directory and are called *test*.py
+
+    - name: generate coverage report
+      run: |
+        coverage html
+
+        - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      
+
+
 
