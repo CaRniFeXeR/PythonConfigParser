@@ -1,5 +1,5 @@
 {
-    "type_name": "src.test.parse_unittests.DummyConfigElement",
+    "type_name": "src.test.datastructure.dummy_cfgs.DummyConfigElement",
     "name": "TestName DummyConfigElement",
     "list": [
         2,
