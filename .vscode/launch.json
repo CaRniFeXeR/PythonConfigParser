@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+    {
+        "name": "Python: Test",
+        "type": "python",
+        "request": "test",
+        "console": "integratedTerminal",
+        "env": {"PYTHONPATH": "${workspaceFolder}" },
+        "justMyCode": false
+    }
+]
+}
