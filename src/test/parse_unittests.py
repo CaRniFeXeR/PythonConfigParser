@@ -13,7 +13,7 @@ class ConfigParserTest(unittest.TestCase):
 
         parser = JSONConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
-        parsed_dummy_config = parser.parse_from_file(Path(".\\src\\test\\json_cfgs\\complex_typed_list.json"))
+        parsed_dummy_config = parser.parse_from_file(Path("src/test/json_cfgs/complex_typed_list.json"))
 
         self.assertTrue(type(parsed_dummy_config).__name__ == "DummyConfig")
 
@@ -25,7 +25,7 @@ class ConfigParserTest(unittest.TestCase):
         parser = JSONConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
         with self.assertRaises(Exception) as context:
-            parsed_dummy_config = parser.parse_from_file(Path(".\\src\\test\\json_cfgs\\missing_field.json"))
+            parsed_dummy_config = parser.parse_from_file(Path("src/test/json_cfgs/missing_field.json"))
 
         exception_msg = str(context.exception)
         self.assertTrue("missing" in exception_msg)
@@ -37,7 +37,7 @@ class ConfigParserTest(unittest.TestCase):
         parser = JSONConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
         with self.assertRaises(Exception) as context:
-            parsed_dummy_config = parser.parse_from_file(Path(".\\src\\test\\json_cfgs\\unkown_field.json"))
+            parsed_dummy_config = parser.parse_from_file(Path("src/test/json_cfgs/unkown_field.json"))
 
         exception_msg = str(context.exception)
         self.assertTrue("unkown field name 'field_that_does_not_exist' for type" in exception_msg)
@@ -47,7 +47,7 @@ class ConfigParserTest(unittest.TestCase):
         parser = JSONConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
         with self.assertRaises(Exception) as context:
-            parsed_dummy_config = parser.parse_from_file(Path(".\\src\\test\\json_cfgs\\missing_type_name.json"))
+            parsed_dummy_config = parser.parse_from_file(Path("src/test/json_cfgs/missing_type_name.json"))
 
         exception_msg = str(context.exception)
         self.assertTrue("'type_name' must be specified" in exception_msg)
@@ -56,7 +56,7 @@ class ConfigParserTest(unittest.TestCase):
 
         parser = JSONConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
-        parsed_dummy_config = parser.parse_from_file(Path(".\\src\\test\\json_cfgs\\wrong_simple_type.json"))
+        parsed_dummy_config = parser.parse_from_file(Path("src/test/json_cfgs/wrong_simple_type.json"))
 
         self.assertTrue(type(parsed_dummy_config.name).__name__ == "str")
 
@@ -64,8 +64,8 @@ class ConfigParserTest(unittest.TestCase):
         
         parser = JSONConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
-        parsed_dummy_config_path = parser.parse_from_file(Path(".\\src\\test\\json_cfgs\\complex_typed_list.json"))
-        parsed_dummy_config_str = parser.parse_from_file(".\\src\\test\\json_cfgs\\complex_typed_list.json")
+        parsed_dummy_config_path = parser.parse_from_file(Path("src/test/json_cfgs/complex_typed_list.json"))
+        parsed_dummy_config_str = parser.parse_from_file("src/test/json_cfgs/complex_typed_list.json")
 
         self.assertEqual(parsed_dummy_config_path, parsed_dummy_config_str)
 
