@@ -69,8 +69,10 @@ my_config = JSONConfigParser().parse_config_into_typed_object(my_config_dict,a)
 pip install cfgparser
 ```
 
-## Comming Features
+## Coming Features
 
 - yaml support
 - typed optional support
 - specify config from cli
+- cd pipeline 
+- test coverage banner
