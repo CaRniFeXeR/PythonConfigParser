@@ -1,9 +1,6 @@
 name: Publish to PyPI
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:  # This will enable manual triggering
 
 jobs:
@@ -21,6 +18,7 @@ jobs:
 
     - name: Install dependencies
       run: pip install -r requirements.txt
+           pip install wheel
 
     - name: Build and publish
       env:
