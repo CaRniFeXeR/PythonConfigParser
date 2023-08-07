@@ -1,0 +1,6 @@
+{
+    "type_name": "src.test.datastructure.dummy_cfgs.DummyConfigElement",
+    "name": "TestNameDummyConfig",
+    "list" : null,
+    "another_list" :null
+}

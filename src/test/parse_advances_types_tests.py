@@ -4,7 +4,7 @@ from src.cfgparser.io.jsonfileloader import JsonFileLoader
 
 from src.cfgparser.json_config_parser import JSONConfigParser
 from src.test.datastructure.dummy_cfgs import DummyConfigElement
-
+import src.cfgparser as cfgparser
 
 
 
@@ -44,15 +44,18 @@ class AdvancedTypesTests(unittest.TestCase):
 
 
     # nested optional not set
+    #TODO
 
-    # None given
-    def test__load_jsonfile__empty_string_given__raise_exception(self):
-        
+    #strict none mode on
+    def test__parse_without_none_allowed__none_given__raise_error(self):
+        cfgparser.settings.allow_none = False
+        parser = JSONConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
+
         with self.assertRaises(Exception) as context:
-            filereader = JsonFileLoader(None)
+            parsed_dummy_config = parser.parse_from_file(Path("src/test/json_cfgs/none_fields.json"))
 
         exception_msg = str(context.exception)
-        self.assertTrue("inputfile is empty" in exception_msg)
+        self.assertTrue("must be a list" in exception_msg)
 
 
 

@@ -62,12 +62,17 @@ my_config = JSONConfigParser().parse_typed(my_config_dict,a)
 
 ```
 
+By default every field can be explicitly set to None. If you don't what this behaviour you can set the flag "allow_none" to False.
 
+```python
+    cfgparser.settings.allow_none = False
+```
 
 ## Features
 
 - fully typed json configs
 - nested configs
+- complex union and optional types
 - dict object into typed dataclass
 
 ## Installation
@@ -76,11 +81,9 @@ my_config = JSONConfigParser().parse_typed(my_config_dict,a)
 pip install cfgparser
 ```
 
-## Coming Features
+## Features Roadmap
 
 - yaml support
-- typed optional support
-- typed union support
 - specify config from cli
 - cd pipeline 
 - post hock

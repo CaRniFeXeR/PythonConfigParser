@@ -2,11 +2,13 @@ from typing import Type
 import typing
 
 from src.cfgparser.utils.union_handler import is_union_type
-
+from src.cfgparser import settings
 from .io.jsonfileloader import JsonFileLoader
 from pathlib import Path
 from enum import Enum
 import inspect
+
+
 
 from .utils.dynamic_type_loader import load_type_dynamically_from_fqn
 
@@ -74,7 +76,7 @@ class JSONConfigParser:
         return current_type(**result_dict)
 
     def _parse_value(self, k : str, v, type : Type):
-        if v is None:
+        if v is None and settings.allow_none:
             return None
 
         elif inspect.isclass(type) and issubclass(type, Enum):  # is Enum
@@ -103,6 +105,7 @@ class JSONConfigParser:
         elif is_union_type(type):
             return self._try_parse_union(k,v,type)
         else:
+            # normal standard type that can be initated with its value
             return type(v)
 
     def _try_parse_union(self, k : str, value, union_type : Type):
@@ -113,7 +116,7 @@ class JSONConfigParser:
         unioned_types = typing.get_args(union_type)
 
         for unioned_type in unioned_types:
-            if union_type == None:
+            if unioned_type == type(None):
                 if value == None:
                     return None
             else:
