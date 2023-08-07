@@ -1,5 +1,6 @@
 from typing import Type
 import typing
+from src.cfgparser.io.yamlfileloader import YamlFileLoader
 
 from src.cfgparser.utils.union_handler import is_union_type
 from src.cfgparser import settings
@@ -12,9 +13,9 @@ import inspect
 
 from .utils.dynamic_type_loader import load_type_dynamically_from_fqn
 
-class JSONConfigParser:
+class ConfigParser:
     """
-    Handles parsing of json config into typed dataclass
+    Handles parsing of json and yaml config into typed dataclass
     """
 
     def __init__(self, datastructure_module_name: str = "src.datastructures") -> None:
@@ -33,8 +34,14 @@ class JSONConfigParser:
         if not config_path.exists():
             raise ValueError(f"given config_path '{config_path}' does not exist")
 
-        fileloader = JsonFileLoader(config_path)
-        config_dict = fileloader.loadJsonFile()
+        if config_path.name.endswith(".json"):
+            fileloader = JsonFileLoader(config_path)
+        elif config_path.name.endswith(".yml") or config_path.name.endswith(".yaml"):
+            fileloader = YamlFileLoader(config_path)
+        else:
+            raise ValueError(f"either .json or .yml or .yaml files expected but '{config_path.name}' given")
+        
+        config_dict = fileloader.load_file()
 
         return self.parse(config_dict)
 

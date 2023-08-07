@@ -7,6 +7,9 @@ class JsonFileLoader(FileLoader):
     Handles JSON File loading
     """
 
+    def load_file(self):
+        return self.loadJsonFile()
+
     def loadJsonFile(self) -> dict:
         with open(self.inputfile) as json_file:
             try:

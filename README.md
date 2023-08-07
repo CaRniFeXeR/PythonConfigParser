@@ -31,7 +31,7 @@ First initialize the config parser with the path to the module with the config d
 
 ```python
 
-parser = JSONConfigParser(datastructure_module_name="mysrc.datastructures.configs")
+parser = ConfigParser(datastructure_module_name="mysrc.datastructures.configs")
 # Then parse the config from file.
 my_config = parser.parse_from_file("myconfig.json")
 
@@ -42,7 +42,7 @@ my_config = parser.parse_from_file("myconfig.json")
 ```python
 
 my_config_dict = {"type_name" : "mysrc.datastructures.configs.a"}
-my_config = JSONConfigParser().parse(my_config_dict)
+my_config = ConfigParser().parse(my_config_dict)
 
 ```
 
@@ -58,7 +58,7 @@ There are two ways to define the configs type:
 ```python
 from mysrc.datastructures.configs import a
 my_config_dict = {"some_key" : "some_value"}
-my_config = JSONConfigParser().parse_typed(my_config_dict,a)
+my_config = ConfigParser().parse_typed(my_config_dict,a)
 
 ```
 
@@ -70,7 +70,7 @@ By default every field can be explicitly set to None. If you don't what this beh
 
 ## Features
 
-- fully typed json configs
+- fully typed json and yaml configs
 - nested configs
 - complex union and optional types
 - dict object into typed dataclass
@@ -83,8 +83,6 @@ pip install cfgparser
 
 ## Features Roadmap
 
-- yaml support
 - specify config from cli
-- cd pipeline 
 - post hock
 - distributed configs

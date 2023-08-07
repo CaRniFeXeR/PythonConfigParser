@@ -2,7 +2,7 @@ from pathlib import Path
 import unittest
 from src.cfgparser.io.jsonfileloader import JsonFileLoader
 
-from src.cfgparser.json_config_parser import JSONConfigParser
+from src.cfgparser.config_parser import ConfigParser
 from src.test.datastructure.dummy_cfgs import DummyConfigElement
 import src.cfgparser as cfgparser
 
@@ -13,7 +13,7 @@ class AdvancedTypesTests(unittest.TestCase):
 
     # Optional set
     def test__parse__optional_set__parse_correctly(self):
-        parser = JSONConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
+        parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
         parsed_dummy_config = parser.parse_from_file(Path("src/test/json_cfgs/correct_optional.json"))
 
@@ -24,7 +24,7 @@ class AdvancedTypesTests(unittest.TestCase):
 
     # Optional not set
     def test__parse__optional_not_set__no_error(self):
-        parser = JSONConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
+        parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
         parsed_dummy_config = parser.parse_from_file(Path("src/test/json_cfgs/optional_not_set.json"))
 
@@ -33,7 +33,7 @@ class AdvancedTypesTests(unittest.TestCase):
     
     # Optional set to wrong type
     def test__parse__optional_set_to_wrong_type__raise_error(self):
-        parser = JSONConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
+        parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
         with self.assertRaises(Exception) as context:
             parsed_dummy_config = parser.parse_from_file(Path("src/test/json_cfgs/optional_set_to_wrong_type.json"))
@@ -49,7 +49,7 @@ class AdvancedTypesTests(unittest.TestCase):
     #strict none mode on
     def test__parse_without_none_allowed__none_given__raise_error(self):
         cfgparser.settings.allow_none = False
-        parser = JSONConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
+        parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
         with self.assertRaises(Exception) as context:
             parsed_dummy_config = parser.parse_from_file(Path("src/test/json_cfgs/none_fields.json"))
