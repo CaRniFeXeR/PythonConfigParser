@@ -1,0 +1,10 @@
+{
+    "type_name": "src.test.datastructure.dummy_cfgs.DummyOptionalFieldsConfig",
+    "config_name": "DummyOptionalFieldsConfig",
+    "optional_el" : {
+        "name" : "optional_el",
+        "list" : [2,3],
+        "another_list" : [2.3, 4.1]
+    },
+    "optional_list" : [3.3]
+}

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Optional
 
 
 @dataclass
@@ -21,3 +21,9 @@ class NestedDummyConfig:
     dummy_conf_a : DummyConfig
     dummy_conf_b : DummyConfig
     main_element : DummyConfigElement
+
+@dataclass
+class DummyOptionalFieldsConfig:
+    config_name: str
+    optional_el: Optional[DummyConfigElement] = None
+    optional_list : Optional[List[float]] = None

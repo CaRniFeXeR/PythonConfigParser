@@ -1,4 +1,7 @@
 from typing import Type
+import typing
+
+from src.cfgparser.utils.union_handler import is_union_type
 
 from .io.jsonfileloader import JsonFileLoader
 from pathlib import Path
@@ -66,34 +69,57 @@ class JSONConfigParser:
                 raise TypeError(f"unkown field name '{k}' for type '{current_type.__name__}'")
 
             field = current_fields[k]
-
-            if v is None:
-                result_dict[k] = None
-
-            elif inspect.isclass(field.type) and issubclass(field.type, Enum):  # is Enum
-                try:
-                    result_dict[k] = field.type[v]
-                except Exception as ex:
-                    raise ValueError(f"value '{v}' is not valid for enum of type '{field.type}' ") from ex
-
-            elif field.type.__module__.startswith(self.datastructure_module_name):  # complex type from the specificed module
-                result_dict[k] = self.parse_typed(v, field.type)
-            elif hasattr(field.type, "_name") and field.type._name == "List":
-
-                if not isinstance(v, list):
-                    raise TypeError(f"'{k}' must be a list.")
-
-                list_element_type = field.type.__args__[0]
-
-                parsed_list = []
-                for el in v:
-                    parsed_list.append(self.parse_typed(el, list_element_type))
-
-                result_dict[k] = parsed_list
-                
-            elif hasattr(field.type, "_name") and field.type._name == "Dict":
-                result_dict[k] = dict(v)
-            else:
-                result_dict[k] = field.type(v)
+            result_dict[k] = self._parse_value(k, v, field.type)
 
         return current_type(**result_dict)
+
+    def _parse_value(self, k : str, v, type : Type):
+        if v is None:
+            return None
+
+        elif inspect.isclass(type) and issubclass(type, Enum):  # is Enum
+            try:
+                return type[v]
+            except Exception as ex:
+                raise ValueError(f"value '{v}' is not valid for enum of type '{type}' ") from ex
+
+        elif type.__module__.startswith(self.datastructure_module_name):  # complex type from the specificed module
+            return self.parse_typed(v, type)
+        elif hasattr(type, "_name") and type._name == "List":
+
+            if not isinstance(v, list):
+                raise TypeError(f"'{k}' must be a list.")
+
+            list_element_type = type.__args__[0]
+
+            parsed_list = []
+            for el in v:
+                parsed_list.append(self.parse_typed(el, list_element_type))
+
+            return parsed_list
+            
+        elif hasattr(type, "_name") and type._name == "Dict":
+            return dict(v)
+        elif is_union_type(type):
+            return self._try_parse_union(k,v,type)
+        else:
+            return type(v)
+
+    def _try_parse_union(self, k : str, value, union_type : Type):
+        """
+        try to parse given value to the given union type,
+        first sucessful parse will be returned
+        """
+        unioned_types = typing.get_args(union_type)
+
+        for unioned_type in unioned_types:
+            if union_type == None:
+                if value == None:
+                    return None
+            else:
+                try:
+                    return self._parse_value(k,value, unioned_type)
+                except:
+                    pass
+
+        raise TypeError(f"could not parse value '{value}' to any of the unioned types {unioned_types}")
