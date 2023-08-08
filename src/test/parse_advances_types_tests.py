@@ -1,10 +1,9 @@
 from pathlib import Path
 import unittest
-from src.cfgparser.io.jsonfileloader import JsonFileLoader
 
 from src.cfgparser.config_parser import ConfigParser
 from src.test.datastructure.dummy_cfgs import DummyConfigElement
-import src.cfgparser as cfgparser
+from src import cfgparser
 
 
 
