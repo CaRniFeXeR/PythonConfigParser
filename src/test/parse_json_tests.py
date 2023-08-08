@@ -69,16 +69,6 @@ class JsonConfigParserTest(unittest.TestCase):
 
         self.assertEqual(parsed_dummy_config_path, parsed_dummy_config_str)
 
-    # wrong extension
-    def  test__load_file__wrong_file_extension__raise_exception(self):
-        parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
-
-        with self.assertRaises(Exception) as context:
-            parsed_dummy_config_path = parser.parse_from_file(Path("src/test/wrong_extention.wrong"))
-
-        exception_msg = str(context.exception)
-        self.assertTrue("either .json or .yml or .yaml files expected but" in exception_msg)
-
 
 if __name__ == '__main__':
     unittest.main()

@@ -23,7 +23,7 @@ class ConfigParser:
 
     def parse_from_file(self, config_path: Path):
         """
-        loads a json config from the specified location and parses it into a typed object based on the type specified in 'type_name'
+        loads a json or yaml config from the specified location and parses it into a typed object based on the type specified in 'type_name'
         """
 
         if isinstance(config_path, str):
