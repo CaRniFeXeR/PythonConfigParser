@@ -57,6 +57,11 @@ class AdvancedTypesTests(unittest.TestCase):
         exception_msg = str(context.exception)
         self.assertTrue("must be a list" in exception_msg)
 
+    def test__parse_without_none_allowed_none_given_in_optional__no_error(self):
+        cfgparser.settings.allow_none = False
+        parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
+        parsed_dummy_config = parser.parse_from_file(Path("src/test/json_cfgs/optional_set_to_none.json"))
+
 
 
 if __name__ == '__main__':
