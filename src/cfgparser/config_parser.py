@@ -1,9 +1,9 @@
 from typing import Type
 import typing
-from src.cfgparser.io.yamlfileloader import YamlFileLoader
+from .io.yamlfileloader import YamlFileLoader
 
-from src.cfgparser.utils.union_handler import is_union_type
-from src.cfgparser import settings
+from .utils.union_handler import is_union_type
+from . import settings
 from .io.jsonfileloader import JsonFileLoader
 from pathlib import Path
 from enum import Enum
