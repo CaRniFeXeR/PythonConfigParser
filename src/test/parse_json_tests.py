@@ -52,6 +52,15 @@ class JsonConfigParserTest(unittest.TestCase):
         exception_msg = str(context.exception)
         self.assertTrue("'type_name' must be specified" in exception_msg)
 
+    def test__config_parser_with_given_type__missing_type_name__no_error(self):
+        from src.test.datastructure.dummy_cfgs import DummyConfigElement
+        parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
+
+        parsed_dummy_config = parser.parse_form_file_typed(Path("src/test/json_cfgs/missing_type_name.json"), DummyConfigElement)
+
+        self.assertTrue(isinstance(parsed_dummy_config, DummyConfigElement))
+        self.assertEqual(parsed_dummy_config.name, "TestNameDummyConfig")
+
     def test__config_parser__wrong_simple_type__throws_exception(self):
 
         parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")

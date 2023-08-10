@@ -21,11 +21,7 @@ class ConfigParser:
     def __init__(self, datastructure_module_name: str = "src.datastructures") -> None:
         self.datastructure_module_name = datastructure_module_name
 
-    def parse_from_file(self, config_path: Path):
-        """
-        loads a json or yaml config from the specified location and parses it into a typed object based on the type specified in 'type_name'
-        """
-
+    def _load_config_file(self, config_path: Path) -> dict:
         if isinstance(config_path, str):
             config_path = Path(config_path)
         elif not isinstance(config_path, Path):
@@ -43,7 +39,25 @@ class ConfigParser:
         
         config_dict = fileloader.load_file()
 
+        return config_dict
+
+    def parse_from_file(self, config_path: Path):
+        """
+        loads a json or yaml config from the specified location and parses it into a typed object based on the type specified in 'type_name'
+        """
+
+        config_dict = self._load_config_file(config_path)
+
         return self.parse(config_dict)
+    
+    def parse_form_file_typed(self, config_path: Path, target_type : Type):
+        """
+        loads a json or yaml config from the specified location and parses it into the given type
+        """
+
+        config_dict = self._load_config_file(config_path)
+
+        return self.parse_typed(config_dict, target_type)
 
     def parse(self, config_dict: dict):
         """
@@ -56,31 +70,31 @@ class ConfigParser:
         if "type_name" not in config_dict.keys():
             raise ValueError("'type_name' must be specified")
 
-        current_type = load_type_dynamically_from_fqn(config_dict["type_name"])
+        target_type = load_type_dynamically_from_fqn(config_dict["type_name"])
         del config_dict["type_name"]  # should not be parsed
 
-        return self.parse_typed(config_dict, current_type)
+        return self.parse_typed(config_dict, target_type)
 
-    def parse_typed(self, config_dict: dict, current_type: Type):
+    def parse_typed(self, config_dict: dict, target_type: Type):
         """
         recursively converts a dict into the given dataclass type
         """
 
-        if not isinstance(config_dict, dict) or not hasattr(current_type, "__dataclass_fields__"):
+        if not isinstance(config_dict, dict) or not hasattr(target_type, "__dataclass_fields__"):
             return config_dict
 
         result_dict = {}
-        current_fields = current_type.__dataclass_fields__
+        current_fields = target_type.__dataclass_fields__
 
         for k, v in config_dict.items():
 
             if k not in current_fields:
-                raise TypeError(f"unkown field name '{k}' for type '{current_type.__name__}'")
+                raise TypeError(f"unkown field name '{k}' for type '{target_type.__name__}'")
 
             field = current_fields[k]
             result_dict[k] = self._parse_value(k, v, field.type)
 
-        return current_type(**result_dict)
+        return target_type(**result_dict)
 
     def _parse_value(self, k : str, v, type : Type):
         if v is None and settings.allow_none:
