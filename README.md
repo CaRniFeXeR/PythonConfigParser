@@ -65,7 +65,8 @@ my_config = ConfigParser().parse_typed(my_config_dict,a)
 By default every field can be explicitly set to None. If you don't what this behaviour you can set the flag "allow_none" to False.
 
 ```python
-    cfgparser.settings.allow_none = False
+    from cfgparser import settings
+    settings.allow_none = False
 ```
 
 ## Features
@@ -74,10 +75,13 @@ By default every field can be explicitly set to None. If you don't what this beh
 - nested configs
 - complex union and optional types
 - dict object into typed dataclass
+- support for enums (string and int)
+
+Whenever a Union type is encountered the parser tries to parse the config with the first type in the union. If this fails it tries the next type and so on. If all types fail the parser raises an exception.
 
 ## Installation
 
-```
+```bash
 pip install cfgparser
 ```
 

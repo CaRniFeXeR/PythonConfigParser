@@ -102,7 +102,12 @@ class ConfigParser:
 
         elif inspect.isclass(type) and issubclass(type, Enum):  # is Enum
             try:
-                return type[v]
+                if isinstance(v, str):
+                    return type[v]
+                elif isinstance(v, int):
+                    return type(v)
+                else:
+                    raise ValueError(f"value '{v}' must either be a str or int for enum of type '{type}'")
             except Exception as ex:
                 raise ValueError(f"value '{v}' is not valid for enum of type '{type}' ") from ex
 

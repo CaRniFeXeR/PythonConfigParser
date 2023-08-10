@@ -32,5 +32,6 @@ class YamlConfigParserTest(unittest.TestCase):
         self.assertTrue("required positional argument" in exception_msg)
         self.assertTrue("another_list" in exception_msg)
 
+
 if __name__ == '__main__':
     unittest.main()

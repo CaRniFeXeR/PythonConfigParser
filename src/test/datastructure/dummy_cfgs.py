@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 from typing import List, Optional
+from enum import Enum
+
 
 
 @dataclass
@@ -7,6 +9,16 @@ class DummyConfigElement:
     name: str
     list: List[int]
     another_list: List[float]
+
+class DummyEnum(Enum):
+    RED = 1
+    BLUE = 2
+    ORANGE = 27
+
+@dataclass
+class DummyEnumConfig:
+    name : str
+    enum : DummyEnum
 
 
 @dataclass
