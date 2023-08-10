@@ -85,8 +85,10 @@ Whenever a Union type is encountered the parser tries to parse the config with t
 pip install cfgparser
 ```
 
-## Features Roadmap
+## Feature Roadmap
 
 - specify config from cli
 - post hock
 - distributed configs
+- typed dicts (e.g. Dict[str, MyType])
+- typed functions (e.g. torch.functional.relu)
