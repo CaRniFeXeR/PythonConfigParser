@@ -1,0 +1,4 @@
+type_name: "src.test.datastructure.dummy_cfgs.DummyTupleConfig"
+config_name: "TupleConfigTest"
+min_max: [2.0,23]
+from_to_time : [10, "AM", 8]

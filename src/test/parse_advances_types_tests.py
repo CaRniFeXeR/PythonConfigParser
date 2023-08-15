@@ -61,7 +61,47 @@ class AdvancedTypesTests(unittest.TestCase):
         parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
         parsed_dummy_config = parser.parse_from_file(Path("src/test/json_cfgs/optional_set_to_none.json"))
 
+    #region [Tuple]
+    def test__parse_typed_tuple__tuple_given_with_complex_types_given__parse_correctly(self):
+        parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
+        parsed_dummy_config = parser.parse_from_file(Path("src/test/yaml_cfgs/tuple.yml"))
 
+        self.assertTrue(isinstance(parsed_dummy_config.min_max,tuple))
+        self.assertTrue(isinstance(parsed_dummy_config.from_to_time,tuple))
+        self.assertTrue(isinstance(parsed_dummy_config.from_to_time[0],int))
+        self.assertTrue(isinstance(parsed_dummy_config.from_to_time[1],str))
+        self.assertTrue(isinstance(parsed_dummy_config.from_to_time[2],int))
+        self.assertTrue(isinstance(parsed_dummy_config.from_to_time[3],str))
+
+    def test__parse_typed_tuple__to_enough_values_given__raise_excpetion(self):
+
+        parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
+
+        with self.assertRaises(Exception) as context:
+            parsed_dummy_config = parser.parse_from_file(Path("src/test/yaml_cfgs/tuple_to_few_values.yml"))
+
+        exception_msg = str(context.exception)
+        self.assertTrue("must have exactly 4 element" in exception_msg)
+
+    def test__parse_typed_tuple__just_a_number_given__raise_non_lengthable_exception(self):
+        parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
+
+        with self.assertRaises(Exception) as context:
+            parsed_dummy_config = parser.parse_from_file(Path("src/test/yaml_cfgs/tuple_just_a_number.yml"))
+
+        exception_msg = str(context.exception)
+        self.assertTrue("Value needs to be length-able." in exception_msg)
+
+    def test__parse_typed_tuple__one_value_with_wrong_type__raise_exception(self):
+        parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
+
+        with self.assertRaises(Exception) as context:
+            parsed_dummy_config = parser.parse_from_file(Path("src/test/yaml_cfgs/tuple_one_value_with_wrong_type.yml"))
+
+        exception_msg = str(context.exception)
+        self.assertTrue("could not parse value" in exception_msg)
+
+    #endregion
 
 if __name__ == '__main__':
     unittest.main()

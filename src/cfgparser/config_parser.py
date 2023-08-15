@@ -1,4 +1,4 @@
-from typing import Type
+from typing import Tuple, Type
 import typing
 from .io.yamlfileloader import YamlFileLoader
 
@@ -134,6 +134,8 @@ class ConfigParser:
             return dict(v)
         elif is_union_type(type):
             return self._try_parse_union(k,v,type)
+        elif typing.get_origin(type) is tuple:
+            return self._try_parse_tuple(k,v,type)
         else:
             # normal standard type that can be initated with its value
             return type(v)
@@ -156,3 +158,29 @@ class ConfigParser:
                     pass
 
         raise TypeError(f"could not parse value '{value}' to any of the unioned types {unioned_types}")
+    
+    def _try_parse_tuple(self, k : str, value, tuple_type : Type):
+        """
+        try to parse given value to the given tuple type
+        """
+        
+        if not hasattr(value, '__len__'):
+            raise TypeError(f"could not parse value '{value}' to tuple type {tuple_type}. Value needs to be length-able.")
+        
+        tuple_types = typing.get_args(tuple_type)
+
+        #check if number of elements in tuple is correct
+        if len(value) != len(tuple_types):
+            raise TypeError(f"tuple '{k}' must have exactly {len(tuple_types)} elements")
+        try:        
+
+            tuple_values = []
+
+            for tuple_type, tuple_value in zip(tuple_types, value):
+                #parse each element of the tuple
+                tuple_values.append(self._parse_value(k,tuple_value, tuple_type))
+
+            return tuple(tuple_values)
+
+        except Exception as ex:
+            raise TypeError(f"could not parse value '{value}' to tuple type {tuple_type}") from ex
