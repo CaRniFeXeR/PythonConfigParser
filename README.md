@@ -110,7 +110,8 @@ class AnimalOwnership:
 - ✅ nested configs
 - ✅ complex union and optional types
 - ✅ dict object into typed dataclass
-- ✅    support for enums (string and int)
+- ✅ support for enums (string and int)
+- ✅ override type_name if type is specified when parsing
 
 
 
@@ -126,4 +127,6 @@ pip install cfgparser
 - ⬜ post hock
 - ⬜ distributed configs
 - ⬜ typed dicts (e.g. Dict[str, MyType])
+- ⬜ typed tuples (e.g. Tuple[int, str])
 - ⬜ typed functions (e.g. torch.functional.relu)
+- ⬜ save config to file (json, yaml) with and without typeinfo

@@ -2,6 +2,7 @@ from pathlib import Path
 import unittest
 
 from src.cfgparser.config_parser import ConfigParser
+from src.test.datastructure.dummy_cfgs import DummyConfig
 
 
 
@@ -60,6 +61,15 @@ class JsonConfigParserTest(unittest.TestCase):
 
         self.assertTrue(isinstance(parsed_dummy_config, DummyConfigElement))
         self.assertEqual(parsed_dummy_config.name, "TestNameDummyConfig")
+
+    def test__config_parser_with_given_type__type_also_set_in_config__no_error(self):
+        from src.test.datastructure.dummy_cfgs import DummyConfigElement
+        parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
+
+        parsed_dummy_config = parser.parse_form_file_typed(Path("src/test/json_cfgs/complex_typed_list.json"), DummyConfig)
+
+        self.assertTrue(isinstance(parsed_dummy_config, DummyConfig))
+        self.assertEqual(parsed_dummy_config.config_name, "TestNameDummyConfig")
 
     def test__config_parser__wrong_simple_type__throws_exception(self):
 

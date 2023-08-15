@@ -82,6 +82,10 @@ class ConfigParser:
 
         if not isinstance(config_dict, dict) or not hasattr(target_type, "__dataclass_fields__"):
             return config_dict
+        
+        if "type_name" in config_dict.keys():
+            # ignore type_name if it is in the dict
+            config_dict.pop("type_name")
 
         result_dict = {}
         current_fields = target_type.__dataclass_fields__
