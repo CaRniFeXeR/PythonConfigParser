@@ -50,7 +50,7 @@ class ConfigParser:
 
         return self.parse(config_dict)
     
-    def parse_form_file_typed(self, config_path: Path, target_type : Type):
+    def parse_from_file_typed(self, config_path: Path, target_type : Type):
         """
         loads a json or yaml config from the specified location and parses it into the given type
         """

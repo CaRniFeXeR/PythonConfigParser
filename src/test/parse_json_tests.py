@@ -57,7 +57,7 @@ class JsonConfigParserTest(unittest.TestCase):
         from src.test.datastructure.dummy_cfgs import DummyConfigElement
         parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
-        parsed_dummy_config = parser.parse_form_file_typed(Path("src/test/json_cfgs/missing_type_name.json"), DummyConfigElement)
+        parsed_dummy_config = parser.parse_from_file_typed(Path("src/test/json_cfgs/missing_type_name.json"), DummyConfigElement)
 
         self.assertTrue(isinstance(parsed_dummy_config, DummyConfigElement))
         self.assertEqual(parsed_dummy_config.name, "TestNameDummyConfig")
@@ -66,7 +66,7 @@ class JsonConfigParserTest(unittest.TestCase):
         from src.test.datastructure.dummy_cfgs import DummyConfigElement
         parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
-        parsed_dummy_config = parser.parse_form_file_typed(Path("src/test/json_cfgs/complex_typed_list.json"), DummyConfig)
+        parsed_dummy_config = parser.parse_from_file_typed(Path("src/test/json_cfgs/complex_typed_list.json"), DummyConfig)
 
         self.assertTrue(isinstance(parsed_dummy_config, DummyConfig))
         self.assertEqual(parsed_dummy_config.config_name, "TestNameDummyConfig")

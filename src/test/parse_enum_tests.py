@@ -14,7 +14,7 @@ class ParseEnumTests(unittest.TestCase):
 
         parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
-        parsed_dummy_config = parser.parse_form_file_typed(Path("src/test/yaml_cfgs/enum_str_config.yml"), DummyEnumConfig)
+        parsed_dummy_config = parser.parse_from_file_typed(Path("src/test/yaml_cfgs/enum_str_config.yml"), DummyEnumConfig)
 
         self.assertTrue(isinstance(parsed_dummy_config, DummyEnumConfig))
         self.assertTrue(parsed_dummy_config.enum, DummyEnum.RED)
@@ -23,7 +23,7 @@ class ParseEnumTests(unittest.TestCase):
 
         parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
-        parsed_dummy_config = parser.parse_form_file_typed(Path("src/test/yaml_cfgs/enum_int_config.yml"), DummyEnumConfig)
+        parsed_dummy_config = parser.parse_from_file_typed(Path("src/test/yaml_cfgs/enum_int_config.yml"), DummyEnumConfig)
 
         self.assertTrue(isinstance(parsed_dummy_config, DummyEnumConfig))
         self.assertTrue(parsed_dummy_config.enum, DummyEnum.ORANGE)
@@ -33,7 +33,7 @@ class ParseEnumTests(unittest.TestCase):
         parser = ConfigParser(datastructure_module_name="src.test.datastructure.dummy_cfgs")
 
         with self.assertRaises(Exception) as context:
-            parsed_dummy_config = parser.parse_form_file_typed(Path("src/test/yaml_cfgs/enum_float_config.yml"), DummyEnumConfig)
+            parsed_dummy_config = parser.parse_from_file_typed(Path("src/test/yaml_cfgs/enum_float_config.yml"), DummyEnumConfig)
 
         exp_msg = str(context.exception)
         self.assertTrue("not valid for enum" in exp_msg)
